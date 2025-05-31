@@ -1,0 +1,19 @@
+/* Minecraft MOTD Styles */
+.minecraft-motd {
+  font-family: 'Minecraft', monospace;
+  line-height: 1.2;
+}
+
+.minecraft-motd-line {
+  margin-bottom: 0.25rem;
+}
+
+/* Minecraft color classes - these match the HTML returned by the API */
+.minecraft-motd span[style*="color"] {
+  display: inline-block;
+}
+
+/* Add a small shadow to make text more readable on dark backgrounds */
+.minecraft-motd span {
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
