@@ -61,6 +61,28 @@ export default function MinecraftServerStatus() {
     return () => clearInterval(intervalId);
   }, []);
   
+  // 添加渲染服务器按钮的函数
+  useEffect(() => {
+    const buttonContainer = document.getElementById('server-button-container');
+    
+    if (buttonContainer) {
+      // 清除容器内容
+      buttonContainer.innerHTML = '';
+      
+      // 如果服务器在线，添加按钮
+      if (serverStatus?.online) {
+        const button = document.createElement('a');
+        button.href = 'http://mcpebot.com:20851';
+        button.target = '_blank';
+        button.rel = 'noopener noreferrer';
+        button.className = 'inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200';
+        button.textContent = '访问服务器网页';
+        
+        buttonContainer.appendChild(button);
+      }
+    }
+  }, [serverStatus]);
+  
   if (loading) {
     return (
       <div className="bg-gray-900 p-6 rounded-lg w-full flex items-center justify-center">
@@ -81,75 +103,75 @@ export default function MinecraftServerStatus() {
   }
   
   return (
-    <div className="bg-gray-900 p-6 rounded-lg w-full relative">
-      <div className="flex items-center mb-4">
-        <h3 className="text-xl font-semibold">服务器状态</h3>
-        <div className={`ml-3 h-3 w-3 rounded-full ${serverStatus?.online ? 'bg-green-500' : 'bg-red-500'}`}></div>
-      </div>
-      
-      {serverStatus?.icon && (
-        <div className="absolute top-6 right-6 w-16 h-16">
-          <img 
-            src={serverStatus.icon} 
-            alt="Server Icon" 
-            className="w-full h-full rounded-md" 
-          />
+    <>
+      <div className="bg-gray-900 p-6 rounded-lg w-full relative">
+        <div className="flex items-center mb-4">
+          <h3 className="text-xl font-semibold">服务器状态</h3>
+          <div className={`ml-3 h-3 w-3 rounded-full ${serverStatus?.online ? 'bg-green-500' : 'bg-red-500'}`}></div>
         </div>
-      )}
-      
-      {serverStatus?.online ? (
-        <div className="space-y-2">
-          <p>
-            <span className="font-semibold">地址:</span> mcpebot.com:20016
-          </p>
-          {serverStatus.version && (
+        {serverStatus?.icon && (
+          <div className="absolute top-6 right-6 w-16 h-16">
+            <img 
+              src={serverStatus.icon} 
+              alt="Server Icon" 
+              className="w-full h-full rounded-md" 
+            />
+          </div>
+        )}
+        {serverStatus?.online ? (
+          <div className="space-y-2">
             <p>
-              <span className="font-semibold">版本:</span> {serverStatus.version}
+              <span className="font-semibold">地址:</span> mcpebot.com:20016
             </p>
-          )}
-          {serverStatus.players && (
-            <p>
-              <span className="font-semibold">玩家:</span> {serverStatus.players.online}/{serverStatus.players.max}
-            </p>
-          )}
-          {serverStatus.motd && (
-            <div>
-              <span className="font-semibold">描述:</span>
-              {serverStatus.motd.html && serverStatus.motd.html.length > 0 ? (
-                <div className="ml-2 mt-1 minecraft-motd">
-                  {serverStatus.motd.html.map((line, index) => (
-                    <div 
-                      key={index} 
-                      dangerouslySetInnerHTML={{ __html: line }}
-                      className="minecraft-motd-line"
-                    />
-                  ))}
-                </div>
-              ) : serverStatus.motd.clean && serverStatus.motd.clean.length > 0 ? (
-                <div className="ml-2 mt-1">
-                  {serverStatus.motd.clean.map((line, index) => (
-                    <p key={index}>{line}</p>
-                  ))}
-                </div>
-              ) : null}
-            </div>
-          )}
-          {serverStatus.players?.list && serverStatus.players.list.length > 0 && (
-            <div>
-              <span className="font-semibold">在线:</span>
-              <div className="ml-2 mt-1 flex flex-wrap gap-2">
-                {serverStatus.players.list.map(player => (
-                  <span key={player.uuid} className="bg-gray-800 px-2 py-1 rounded text-sm">
-                    {player.name}
-                  </span>
-                ))}
+            {serverStatus.version && (
+              <p>
+                <span className="font-semibold">版本:</span> {serverStatus.version}
+              </p>
+            )}
+            {serverStatus.players && (
+              <p>
+                <span className="font-semibold">玩家:</span> {serverStatus.players.online}/{serverStatus.players.max}
+              </p>
+            )}
+            {serverStatus.motd && (
+              <div>
+                <span className="font-semibold">描述:</span>
+                {serverStatus.motd.html && serverStatus.motd.html.length > 0 ? (
+                  <div className="ml-2 mt-1 minecraft-motd">
+                    {serverStatus.motd.html.map((line, index) => (
+                      <div 
+                        key={index} 
+                        dangerouslySetInnerHTML={{ __html: line }}
+                        className="minecraft-motd-line"
+                      />
+                    ))}
+                  </div>
+                ) : serverStatus.motd.clean && serverStatus.motd.clean.length > 0 ? (
+                  <div className="ml-2 mt-1">
+                    {serverStatus.motd.clean.map((line, index) => (
+                      <p key={index}>{line}</p>
+                    ))}
+                  </div>
+                ) : null}
               </div>
-            </div>
-          )}
+            )}
+          </div>
+        ) : (
+          <p className="text-red-400">离线</p>
+        )}
+      </div>
+      {serverStatus?.online && (
+        <div className="mt-4">
+          <a
+            href="http://103.91.208.224:20851"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200"
+          >
+            查看服务器统计面板
+          </a>
         </div>
-      ) : (
-        <p className="text-red-400">离线</p>
       )}
-    </div>
+    </>
   );
 }
