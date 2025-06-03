@@ -1,7 +1,19 @@
 import { NextResponse } from 'next/server';
 
+// 缓存相关变量
+let cachedData: any = null;
+let lastFetchTime = 0;
+const CACHE_DURATION = 30000; // 30秒缓存
+
 export async function GET() {
   try {
+    const now = Date.now();
+    
+    // 如果缓存有效，直接返回缓存数据
+    if (cachedData && now - lastFetchTime < CACHE_DURATION) {
+      return NextResponse.json(cachedData);
+    }
+    
     // 服务器地址
     const serverAddress = 'mcpebot.com:20016';
     
@@ -18,6 +30,10 @@ export async function GET() {
     
     const data = await response.json();
     
+    // 更新缓存
+    cachedData = data;
+    lastFetchTime = now;
+    
     // 返回服务器状态数据
     return NextResponse.json(data);
   } catch (error) {
@@ -27,4 +43,4 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+} 

@@ -11,8 +11,6 @@ export default function Home() {
         </div>
         <a
           href="http://www.mcpebot.com"
-          target="_blank"
-          rel="noopener noreferrer"
           className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200"
         >
           返回主页

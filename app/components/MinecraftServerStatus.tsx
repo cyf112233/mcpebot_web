@@ -55,7 +55,7 @@ export default function MinecraftServerStatus() {
     
     fetchServerStatus();
     
-    // Refresh every 60 seconds
+    // 每60秒自动刷新一次
     const intervalId = setInterval(fetchServerStatus, 60000);
     
     return () => clearInterval(intervalId);
@@ -164,8 +164,6 @@ export default function MinecraftServerStatus() {
         <div className="mt-4">
           <a
             href="http://103.91.208.224:20851"
-            target="_blank"
-            rel="noopener noreferrer"
             className="inline-block bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200"
           >
             查看服务器统计面板
