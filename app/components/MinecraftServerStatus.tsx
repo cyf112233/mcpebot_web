@@ -121,7 +121,7 @@ export default function MinecraftServerStatus() {
         {serverStatus?.online ? (
           <div className="space-y-2">
             <p>
-              <span className="font-semibold">地址:</span> mcpebot.com:20016
+              <span className="font-semibold">地址:</span> mcpebot.com:25565
             </p>
             {serverStatus.version && (
               <p>
