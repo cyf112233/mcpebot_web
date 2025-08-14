@@ -15,7 +15,7 @@ export async function GET() {
     }
     
     // 服务器地址
-    const serverAddress = 'mcpebot.com:20016';
+    const serverAddress = 'mcpebot.com:25565';
     
     // 调用mcsrvstat.us API获取服务器状态
     const response = await fetch(`https://api.mcsrvstat.us/3/${serverAddress}`, {
@@ -43,4 +43,5 @@ export async function GET() {
       { status: 500 }
     );
   }
+
 } 
